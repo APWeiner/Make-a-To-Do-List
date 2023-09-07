@@ -1,0 +1,93 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: rgb(209, 209, 209);
+    background-image: linear-gradient(60deg, rgb(47, 47, 138), rgb(19, 19, 56));
+    width: 100vw;
+    height: 100vh;
+    font-family: 'Roboto', sans-serif;
+}
+
+.container {
+    background-color: whitesmoke;
+    margin: 100px auto 20px;
+    width: clamp(500px, 30vw, 1500px);
+    padding: 40px 30px 70px;
+    border-radius: 12px;
+}
+
+.container h1 {
+    color: darkslateblue;
+    text-align: center;
+}
+
+.row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgb(209, 209, 209);
+    border-radius: 20px;
+}
+
+input {
+    height: 50px;
+    border-width: 0px;
+    background: transparent;
+    outline: none;
+    padding: 20px;
+    flex: 1;
+}
+
+button {
+    border-radius: 20px;
+    height: 50px;
+    background-color: rgb(8, 8, 214);
+    border-width: 0px;
+    outline: none;
+    padding: 16px 50px;
+    color: white;
+    cursor: pointer;
+}
+
+ul li {
+    list-style: none;
+    font-size: 17px;
+    padding: 12px 8px 12px 12px;
+    user-select: none;
+    cursor: pointer;
+}
+
+ul li::before {
+    font-size: 25px;
+    content: 'o';
+    padding-right: 20px;
+    color: red;
+}
+
+
+ul li.checked::before {
+    font-size: 25px;
+    content: 'o';
+    color: green;
+}
+
+ul li span {
+    float: right;
+    text-align: center;
+    width: 40px;
+    height: 40px;
+    font-size: 22px;
+    color: #555;
+    line-height: 40px;
+    border-radius: 20px;
+}
+
+ul li span:hover {
+    background-color: #aaa;
+}
