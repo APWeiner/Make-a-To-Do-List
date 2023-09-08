@@ -8,8 +8,8 @@
 
 body {
     background-color: rgb(209, 209, 209);
-    background-image: linear-gradient(60deg, rgb(47, 47, 138), rgb(19, 19, 56));
-    width: 100vw;
+    background-image: linear-gradient(60deg,  rgb(47, 47, 138), rgb(19, 19, 56));
+    width: 100vw + 12px;
     height: 100vh;
     font-family: 'Roboto', sans-serif;
 }
@@ -47,45 +47,96 @@ input {
 button {
     border-radius: 20px;
     height: 50px;
+    font-size: 20px;
+    font-weight: bold;
     background-color: rgb(8, 8, 214);
     border-width: 0px;
     outline: none;
+    font-family: 'Roboto', sans-serif;
     padding: 16px 50px;
-    color: white;
+    color: whitesmoke;
     cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 ul li {
     list-style: none;
     font-size: 17px;
-    padding: 12px 8px 12px 12px;
+    padding: 12px 8px 12px 32px;
     user-select: none;
     cursor: pointer;
+    position: relative;
+    margin-top: 8px;
+    border-radius: 20px;
+}
+
+ul li input {
+    background-color:rgb(209, 209, 209);
+    font-size: 17px;
+    border-radius: 5px;
+    padding: 15px;
+    margin: 0;
+    height: 17px;
+    font-family: 'Roboto', sans-serif;
+}
+
+ul li span.task-text {
+    padding: 15px;
+    height: 17px;
+}
+
+ul li span.task-text:hover {
+    background-color: whitesmoke;
 }
 
 ul li::before {
-    font-size: 25px;
-    content: 'o';
-    padding-right: 20px;
-    color: red;
+    position: absolute;
+    content: '';
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+    background-image: url(images/unchecked.png);
+    background-size: cover;
+    background-position: center;
+    top: 12px;
+    left: 8px;
 }
 
+ul li.checked {
+    text-decoration: line-through;
+}
 
 ul li.checked::before {
-    font-size: 25px;
-    content: 'o';
-    color: green;
+    background-image: url(images/checked.png);
 }
 
-ul li span {
-    float: right;
+ul li button {
+    height: 32px;
+    padding: 5px 20px;
+    position: absolute;
+    right: 0;
+    margin-right: 40px;
+    top: 6px;
+    background-color: burlywood;
+}
+
+button:hover {
+    background-color: aqua;
+}
+
+ul li span.remove {
+    position: absolute;
+    right: 0;
+    top: 2px;
     text-align: center;
     width: 40px;
     height: 40px;
     font-size: 22px;
     color: #555;
-    line-height: 40px;
     border-radius: 20px;
+    padding-top: 5px;
 }
 
 ul li span:hover {
