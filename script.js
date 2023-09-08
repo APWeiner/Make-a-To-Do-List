@@ -1,49 +1,110 @@
 const inputBox = document.getElementById("input-box");
 const listContainer = document.getElementById("list-container")
 
+// press enter to add task
 function handleKeyUp(event) {
     if (event.key === "Enter") {
         addTask();
     }
 }
 
+//Add Task function
 function addTask(){
     if(inputBox.value === ''){
         alert("You must write what you need to do");
     }
     else{
+        //add the task-text
         let li = document.createElement("li");
-        li.innerHTML = inputBox.value;
-        li.setAttribute("draggable", "true")
+        let task = document.createElement("span");
+        task.classList.add("task-text")
+        task.innerHTML = inputBox.value;
+        li.appendChild(task);
 
+        //make the task draggable
+        li.setAttribute("draggable", "true");
         li.addEventListener("dragstart", dragStart);
         li.addEventListener("dragover", dragOver);
         li.addEventListener("drop", drop);
 
+        //add the edit button
         listContainer.appendChild(li);
+        let edit = document.createElement("button");
+        edit.innerHTML = 'edit';
+        li.appendChild(edit);
+
+        //add the remove button
         let span = document.createElement("span");
+        span.classList.add('remove');
         span.innerHTML = 'x';
         li.appendChild(span);
     }
+    //empties add task input field and saves the tasks to localstorage
     inputBox.value = "";
     saveData();
 }
 
+//function for pressing the save button on task text change
+function saveTask(target){
+    const li = target.parentNode
+    const input = li.firstElementChild;
+
+    const task = document.createElement('span');
+    task.classList.add('task-text');
+    task.innerHTML = input.value;
+
+    li.insertBefore(task,  input);
+    li.removeChild(input);
+
+    target.innerHTML = "edit";
+    saveData();
+}
+
+
+//function for changing task values
 listContainer.addEventListener("click", function(e){
+    //check off a task
     if(e.target.tagName === "LI"){
         e.target.classList.toggle("checked");
         saveData();
     }
-    else if(e.target.tagName === "SPAN"){
+    //removes the task
+    else if(e.target.classList.contains("remove")){
         e.target.parentElement.remove();
         saveData();
+    }
+    //edits the task text
+    else if(e.target.textContent === "edit"){
+        const li = e.target.parentNode;
+        const span = li.firstElementChild;
+        //creates an input field with the task text inside
+        const input = document.createElement('input');
+        input.type = 'text';
+        input.value = span.textContent;
+        //Can press enter to save a task change
+        input.addEventListener('keydown', function(event){
+            if (event.key === "Enter") {
+                event.preventDefault();
+                saveTask(e.target);
+            }
+        })
+        //replaces the task text with the input field
+        li.insertBefore(input, span);
+        li.removeChild(span);
+        //focuses the cursor to the input field
+        input.focus();
+        //changes edit button to save button
+        e.target.innerHTML = "save";
+    }
+    else if(e.target.textContent === "save"){
+        saveTask(e.target);
     }
 }, false);
 
 var draggedItem = null;
 
 function dragStart(event) {
-  draggedItem = event.target;
+  draggedItem = event.target.closest("li");
   event.dataTransfer.setData("text/plain", event.target.textContent);
 }
 
@@ -53,19 +114,21 @@ function dragOver(event) {
 
 function drop(event) {
   event.preventDefault();
+  const li = event.target.closest("li");
   if (draggedItem !== event.target) {
     // Swap the positions of the dragged item and the drop target
-    var temp = event.target.innerHTML;
-    var tempClass = event.target.classList.contains("checked");
+    var temp = li.innerHTML;
+    var tempClass = li.classList.contains("checked");
 
-    event.target.innerHTML = draggedItem.innerHTML;
-    event.target.classList.toggle("checked", draggedItem.classList.contains("checked"));
+    li.innerHTML = draggedItem.innerHTML;
+    li.classList.toggle("checked", draggedItem.classList.contains("checked"));
 
     draggedItem.innerHTML = temp;
     draggedItem.classList.toggle("checked", tempClass);
     saveData()
   }
 }
+
 
 function saveData(){
     localStorage.setItem("data", listContainer.innerHTML)
